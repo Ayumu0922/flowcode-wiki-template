@@ -16,7 +16,7 @@ export default function BookmarksPage() {
         <div className="space-y-2">
           {bookmarked.map((a) => (
             <Link key={a.id} to={`/article/${a.id}`} className="flex items-center gap-3 bg-zinc-900/50 border border-zinc-800 rounded-xl px-5 py-4 hover:border-zinc-700 transition-colors">
-              <Bookmark className="w-4 h-4 text-teal-400 fill-teal-400 shrink-0" />
+              <Bookmark className="w-4 h-4 text-accent-400 fill-accent-400 shrink-0" />
               <div className="flex-1">
                 <p className="text-sm font-medium text-white">{a.title}</p>
                 <p className="text-xs text-zinc-500 flex items-center gap-1 mt-0.5"><Clock className="w-3 h-3" />{a.updatedAt}</p>

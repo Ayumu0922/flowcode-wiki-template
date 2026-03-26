@@ -1,12 +1,32 @@
-import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Bookmark, Clock, User } from 'lucide-react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { ArrowLeft, Bookmark, Clock, User, Trash2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { usewikiStore } from '../store/wikiStore';
+import { useToast } from '../components/ui/Toast';
+import { useConfirm } from '../components/ui/ConfirmDialog';
 
 export default function ArticlePage() {
   const { id } = useParams();
-  const { articles, toggleBookmark } = usewikiStore();
+  const { articles, toggleBookmark, deleteArticle } = usewikiStore();
+  const { showToast } = useToast();
+  const { confirm } = useConfirm();
+  const navigate = useNavigate();
   const article = articles.find((a) => a.id === id);
+
+  const handleToggleBookmark = () => {
+    if (!article) return;
+    toggleBookmark(article.id);
+    showToast(article.bookmarked ? 'ブックマークを解除しました' : 'ブックマークに追加しました', 'success');
+  };
+
+  const handleDelete = async () => {
+    if (!article) return;
+    const ok = await confirm({ title: '記事を削除', message: 'この記事を削除してもよろしいですか？', confirmLabel: '削除', variant: 'danger' });
+    if (!ok) return;
+    deleteArticle(article.id);
+    showToast('記事を削除しました', 'success');
+    navigate('/');
+  };
 
   if (!article) return <div className="text-center py-24"><p className="text-zinc-500">記事が見つかりません</p></div>;
 
@@ -14,10 +34,15 @@ export default function ArticlePage() {
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl mx-auto">
       <Link to="/" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-white mb-6"><ArrowLeft className="w-4 h-4" />戻る</Link>
       <div className="flex items-center justify-between mb-4">
-        <span className="text-xs px-2.5 py-0.5 rounded-full bg-teal-500/10 text-teal-400">{article.category}</span>
-        <button onClick={() => toggleBookmark(article.id)} className="text-zinc-400 hover:text-teal-400">
-          <Bookmark className={`w-5 h-5 ${article.bookmarked ? 'fill-teal-400 text-teal-400' : ''}`} />
-        </button>
+        <span className="text-xs px-2.5 py-0.5 rounded-full bg-accent-500/10 text-accent-400">{article.category}</span>
+        <div className="flex items-center gap-2">
+          <button onClick={handleToggleBookmark} className="text-zinc-400 hover:text-accent-400">
+            <Bookmark className={`w-5 h-5 ${article.bookmarked ? 'fill-accent-400 text-accent-400' : ''}`} />
+          </button>
+          <button onClick={handleDelete} className="text-zinc-400 hover:text-red-400">
+            <Trash2 className="w-5 h-5" />
+          </button>
+        </div>
       </div>
       <h1 className="text-2xl font-bold text-white mb-3">{article.title}</h1>
       <div className="flex items-center gap-4 text-sm text-zinc-500 mb-8 pb-6 border-b border-zinc-800">
