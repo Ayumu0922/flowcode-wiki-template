@@ -14,23 +14,23 @@ export default function HomePage() {
   return (
     <PageTransition>
     <div className="max-w-4xl mx-auto space-y-6">
-      <h1 className="text-2xl font-bold text-white">ナレッジベース</h1>
+      <h1 className="text-2xl font-bold text-foreground">ナレッジベース</h1>
       <div className="relative">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
         <input value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="記事を検索..."
-          className="w-full bg-zinc-800/50 border border-zinc-700/50 rounded-lg pl-10 pr-4 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-accent-500/50" />
+          className="w-full bg-zinc-800/50 border border-zinc-700/50 rounded-lg pl-10 pr-4 py-2.5 text-sm text-foreground placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-accent-500/50" />
       </div>
       <div className="flex gap-2 flex-wrap">
-        <button onClick={() => setSelectedCategory(null)} className={`px-3 py-1.5 rounded-lg text-sm font-medium ${!selectedCategory ? 'bg-accent-500/10 text-accent-400' : 'text-zinc-400 hover:text-white'}`}>すべて</button>
+        <button onClick={() => setSelectedCategory(null)} className={`px-3 py-1.5 rounded-lg text-sm font-medium ${!selectedCategory ? 'bg-accent-500/10 text-accent-400' : 'text-zinc-400 hover:text-foreground'}`}>すべて</button>
         {wikiCategories.map((c) => (
-          <button key={c} onClick={() => setSelectedCategory(c)} className={`px-3 py-1.5 rounded-lg text-sm font-medium ${selectedCategory === c ? 'bg-accent-500/10 text-accent-400' : 'text-zinc-400 hover:text-white'}`}>{c}</button>
+          <button key={c} onClick={() => setSelectedCategory(c)} className={`px-3 py-1.5 rounded-lg text-sm font-medium ${selectedCategory === c ? 'bg-accent-500/10 text-accent-400' : 'text-zinc-400 hover:text-foreground'}`}>{c}</button>
         ))}
       </div>
       <div className="space-y-2">
         {filtered.map((article) => (
           <Link key={article.id} to={`/article/${article.id}`} className="block bg-zinc-900/50 border border-zinc-800 rounded-xl px-5 py-4 hover:border-zinc-700 transition-colors group">
             <div className="flex items-center justify-between mb-1">
-              <h3 className="text-sm font-semibold text-white group-hover:text-accent-400 transition-colors">{article.title}</h3>
+              <h3 className="text-sm font-semibold text-foreground group-hover:text-accent-400 transition-colors">{article.title}</h3>
               {article.bookmarked && <Bookmark className="w-3.5 h-3.5 text-accent-400 fill-accent-400" />}
             </div>
             <div className="flex items-center gap-3 text-xs text-zinc-500">

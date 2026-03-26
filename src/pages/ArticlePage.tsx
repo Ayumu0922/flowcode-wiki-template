@@ -32,7 +32,7 @@ export default function ArticlePage() {
 
   return (
     <PageTransition className="max-w-3xl mx-auto">
-      <Link to="/" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-white mb-6"><ArrowLeft className="w-4 h-4" />戻る</Link>
+      <Link to="/" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-foreground mb-6"><ArrowLeft className="w-4 h-4" />戻る</Link>
       <div className="flex items-center justify-between mb-4">
         <span className="text-xs px-2.5 py-0.5 rounded-full bg-accent-500/10 text-accent-400">{article.category}</span>
         <div className="flex items-center gap-2">
@@ -44,14 +44,14 @@ export default function ArticlePage() {
           </button>
         </div>
       </div>
-      <h1 className="text-2xl font-bold text-white mb-3">{article.title}</h1>
+      <h1 className="text-2xl font-bold text-foreground mb-3">{article.title}</h1>
       <div className="flex items-center gap-4 text-sm text-zinc-500 mb-8 pb-6 border-b border-zinc-800">
         <span className="flex items-center gap-1"><User className="w-3.5 h-3.5" />{article.author}</span>
         <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" />{article.updatedAt}</span>
       </div>
       <div className="space-y-4">
         {article.content.split('\n').map((line, i) =>
-          line.startsWith('## ') ? <h2 key={i} className="text-lg font-bold text-white mt-6 mb-2">{line.replace('## ', '')}</h2> :
+          line.startsWith('## ') ? <h2 key={i} className="text-lg font-bold text-foreground mt-6 mb-2">{line.replace('## ', '')}</h2> :
           line.startsWith('- ') ? <p key={i} className="text-sm text-zinc-300 ml-4">• {line.slice(2)}</p> :
           line.match(/^\d+\./) ? <p key={i} className="text-sm text-zinc-300 ml-4">{line}</p> :
           line ? <p key={i} className="text-sm text-zinc-300 leading-relaxed">{line}</p> : <br key={i} />
