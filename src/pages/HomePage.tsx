@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Bookmark, Clock, Tag } from 'lucide-react';
 import { usewikiStore, wikiCategories } from '../store/wikiStore';
+import PageTransition from '../components/ui/PageTransition';
+import EmptyState from '../components/ui/EmptyState';
 
 export default function HomePage() {
   const { articles, searchQuery, setSearchQuery, selectedCategory, setSelectedCategory } = usewikiStore();
@@ -10,6 +12,7 @@ export default function HomePage() {
     .filter((a) => a.title.toLowerCase().includes(searchQuery.toLowerCase()) || a.tags.some((t) => t.includes(searchQuery)));
 
   return (
+    <PageTransition>
     <div className="max-w-4xl mx-auto space-y-6">
       <h1 className="text-2xl font-bold text-white">ナレッジベース</h1>
       <div className="relative">
@@ -42,8 +45,9 @@ export default function HomePage() {
             </div>
           </Link>
         ))}
-        {filtered.length === 0 && <p className="text-center text-zinc-500 py-12">記事が見つかりません</p>}
+        {filtered.length === 0 && <EmptyState icon={Search} title="記事が見つかりません" description="検索条件を変更してみてください" />}
       </div>
     </div>
+    </PageTransition>
   );
 }

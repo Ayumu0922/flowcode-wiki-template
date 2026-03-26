@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { usewikiStore, wikiCategories } from '../store/wikiStore';
+import PageTransition from '../components/ui/PageTransition';
 import { useToast } from '../components/ui/Toast';
 
 export default function CreatePage() {
@@ -22,7 +22,7 @@ export default function CreatePage() {
   };
 
   return (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl mx-auto">
+    <PageTransition className="max-w-3xl mx-auto">
       <h1 className="text-2xl font-bold text-white mb-6">記事作成</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="タイトル" required
@@ -39,6 +39,6 @@ export default function CreatePage() {
           className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-sm text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-accent-500/50 resize-none font-mono" />
         <button type="submit" className="bg-accent-600 hover:bg-accent-500 text-white px-6 py-2.5 rounded-lg text-sm font-medium transition-colors">公開する</button>
       </form>
-    </motion.div>
+    </PageTransition>
   );
 }

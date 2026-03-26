@@ -1,17 +1,18 @@
 import { Link } from 'react-router-dom';
 import { Bookmark, Clock } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { usewikiStore } from '../store/wikiStore';
+import PageTransition from '../components/ui/PageTransition';
+import EmptyState from '../components/ui/EmptyState';
 
 export default function BookmarksPage() {
   const { articles } = usewikiStore();
   const bookmarked = articles.filter((a) => a.bookmarked);
 
   return (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl mx-auto">
+    <PageTransition className="max-w-3xl mx-auto">
       <h1 className="text-2xl font-bold text-white mb-6">ブックマーク</h1>
       {bookmarked.length === 0 ? (
-        <p className="text-zinc-500 text-center py-12">ブックマークがありません</p>
+        <EmptyState icon={Bookmark} title="ブックマークがありません" description="記事をブックマークすると、ここに表示されます" action={<Link to="/" className="inline-flex items-center gap-2 px-4 py-2 bg-accent-600 hover:bg-accent-500 text-white text-sm font-medium rounded-lg transition-colors">記事を探す</Link>} />
       ) : (
         <div className="space-y-2">
           {bookmarked.map((a) => (
@@ -25,6 +26,6 @@ export default function BookmarksPage() {
           ))}
         </div>
       )}
-    </motion.div>
+    </PageTransition>
   );
 }
